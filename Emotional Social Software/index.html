@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪化社交软件原型 - 治愈系风格</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap');
+
+        body {
+            font-family: 'ZCOOL XiaoWei', 'PingFang SC', sans-serif;
+            background-color: #faf8f5;
+            color: #5d5a58;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #faf8f5;
+        }
+
+        .phone-frame {
+            width: 320px;
+            height: 640px;
+            background-color: #faf8f5;
+            border-radius: 36px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02);
+            overflow: hidden;
+            position: relative;
+            margin: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .phone-frame:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.02);
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #faf8f5;
+        }
+
+        .nav-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
+        }
+
+        .nav-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #a8a29e;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icon.active {
+            color: #f9a8d4;
+        }
+
+        .nav-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .emotion-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .emotion-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .emotion-bubble {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .emotion-bubble:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .btn-emotion {
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .btn-emotion:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .profile-stat {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .diary-entry {
+            background-color: #fff9f0;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .diary-entry:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.7s ease forwards;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-pulse {
+            animation: pulse 3s infinite;
+        }
+
+        .screen-title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #5d5a58;
+            letter-spacing: 0.5px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #f9a8d4, #93c5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #f9a8d4, #93c5fd);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(249, 168, 212, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(249, 168, 212, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: #f9a8d4;
+            border: 1px solid rgba(249, 168, 212, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(249, 168, 212, 0.05);
+            transform: translateY(-3px);
+        }
+
+        /* 自定义滚动条 */
+        .screen::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .screen::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.02);
+        }
+
+        .screen::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.08);
+            border-radius: 10px;
+        }
+
+        /* 装饰元素 */
+        .decoration {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .cloud {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.7;
+        }
+
+        .cloud-1 {
+            top: 10%;
+            left: 10%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .cloud-2 {
+            top: 15%;
+            right: 10%;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .leaf {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.5;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .leaf-1 {
+            bottom: 20%;
+            left: 5%;
+        }
+
+        .leaf-2 {
+            top: 30%;
+            right: 5%;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center my-8 gradient-text">情绪化社交软件原型设计</h1>
+
+        <div class="flex flex-wrap justify-center">
+            <!-- 欢迎/登录界面 -->
+            <div class="phone-frame">
+                <div class="screen bg-gradient-to-b from-pink-50 to-blue-50">
+                    <!-- 装饰元素 -->
+                    <div class="cloud cloud-1">
+                        <svg width="50" height="30" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#E0F2FE"/>
+                        </svg>
+                    </div>
+                    <div class="cloud cloud-2">
+                        <svg width="40" height="24" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#FEE2E2"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center h-full relative z-10">
+                        <div class="animate-float mb-8">
+                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="40" cy="40" r="40" fill="#FEE2E2" fill-opacity="0.5"/>
+                                <path d="M40 20C31.2 20 24 27.2 24 36C24 44.8 31.2 52 40 52C48.8 52 56 44.8 56 36C56 27.2 48.8 20 40 20ZM40 48C33.4 48 28 42.6 28 36C28 29.4 33.4 24 40 24C46.6 24 52 29.4 52 36C52 42.6 46.6 48 40 48Z" fill="#F9A8D4"/>
+                                <path d="M34 32C35.1046 32 36 31.1046 36 30C36 28.8954 35.1046 28 34 28C32.8954 28 32 28.8954 32 30C32 31.1046 32.8954 32 34 32Z" fill="#F9A8D4"/>
+                                <path d="M46 32C47.1046 32 48 31.1046 48 30C48 28.8954 47.1046 28 46 28C44.8954 28 44 28.8954 44 30C44 31.1046 44.8954 32 46 32Z" fill="#F9A8D4"/>
+                                <path d="M40 44C43.3 44 46 41.3 46 38H34C34 41.3 36.7 44 40 44Z" fill="#F9A8D4"/>
+                                <path d="M60 36C60 32.7 58.8 29.6 56.8 27.2C57.6 25.2 58 23 58 20.8C58 9.4 48.6 0 37.2 0C29.4 0 22.4 4 18.8 10C8.2 11 0 20 0 31C0 42.6 9.4 52 21 52H54C68.4 52 80 40.4 80 26C80 16.4 71.6 8.4 61 8C60.4 16.8 60 26.8 60 36Z" fill="#E0F2FE" fill-opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold gradient-text mb-4">心情天气</h2>
+                        <p class="text-gray-600 text-center mb-8 px-6">记录每一天的情绪变化，与志同道合的人分享美好</p>
+
+                        <button class="w-4/5 btn-primary py-3 rounded-full mb-3 font-medium">
+                            登录
+                        </button>
+                        <button class="w-4/5 btn-secondary py-3 rounded-full font-medium">
+                            注册
+                        </button>
+
+                        <p class="mt-8 text-sm text-gray-500 px-8 text-center">继续使用即表示您同意我们的<span class="text-pink-400">服务条款</span>和<span class="text-pink-400">隐私政策</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情绪记录界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">今日心情</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-1">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM10 18C5.6 18 2 14.4 2 10C2 5.6 5.6 2 10 2C14.4 2 18 5.6 18 10Z" fill="#BEE3F8" fill-opacity="0.5"/>
+                        </svg>
+                    </div>
+
+                    <div class="mb-6">
+                        <p class="text-gray-600 mb-3">你今天感觉如何？</p>
+                        <div class="flex justify-between mb-4">
+                            <div class="emotion-bubble bg-red-100 text-red-500 animate-fade-in" style="animation-delay: 0.1s;">
+                                <i class="far fa-angry mr-1"></i> 愤怒
+                            </div>
+                            <div class="emotion-bubble bg-blue-100 text-blue-500 animate-fade-in" style="animation-delay: 0.2s;">
+                                <i class="far fa-sad-tear mr-1"></i> 悲伤
+                            </div>
+                            <div class="emotion-bubble bg-yellow-100 text-yellow-500 animate-fade-in" style="animation-delay: 0.3s;">
+                                <i class="far fa-smile mr-1"></i> 开心
+                            </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <div class="emotion-bubble bg-green-100 text-green-500 animate-fade-in" style="animation-delay: 0.4s;">
+                                <i class="far fa-surprise mr-1"></i> 惊讶
+                            </div>
+                            <div class="emotion-bubble bg-purple-100 text-purple-500 animate-fade-in" style="animation-delay: 0.5s;">
+                                <i class="far fa-tired mr-1"></i> 疲惫
+                            </div>
+                            <div class="emotion-bubble bg-gray-100 text-gray-500 animate-fade-in" style="animation-delay: 0.6s;">
+                                <i class="far fa-meh mr-1"></i> 平静
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <p class="text-gray-600 mb-2">分享你的心情...</p>
+                        <textarea class="w-full border border-gray-200 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-pink-300 transition duration-300 text-gray-700" rows="4" placeholder="今天发生了什么？"></textarea>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <button class="mr-2 flex items-center justify-center w-10 h-10 bg-pink-50 rounded-full text-pink-400 hover:bg-pink-100 transition duration-300">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <button class="mr-2 flex items-center justify-center w-10 h-10 bg-blue-50 rounded-full text-blue-400 hover:bg-blue-100 transition duration-300">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button class="mr-2 flex items-center justify-center w-10 h-10 bg-purple-50 rounded-full text-purple-400 hover:bg-purple-100 transition duration-300">
+                            <i class="fas fa-music"></i>
+                        </button>
+                        <button class="flex items-center justify-center w-10 h-10 bg-green-50 rounded-full text-green-400 hover:bg-green-100 transition duration-300">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button class="btn-emotion bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-300">
+                            <i class="fas fa-lock mr-1"></i> 仅自己可见
+                        </button>
+                        <button class="btn-emotion bg-gradient-to-r from-pink-400 to-blue-400 text-white hover:from-pink-500 hover:to-blue-500 transition duration-300">
+                            <i class="fas fa-paper-plane mr-1"></i> 发布
+                        </button>
+                    </div>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情绪社区/动态界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">情绪社区</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-2">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM10 18C5.6 18 2 14.4 2 10C2 5.6 5.6 2 10 2C14.4 2 18 5.6 18 10C18 14.4 14.4 18 10 18Z" fill="#FECDD3" fill-opacity="0.5"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex mb-4 overflow-x-auto py-2 no-scrollbar">
+                        <div class="btn-emotion bg-gradient-to-r from-pink-400 to-blue-400 text-white mr-2 whitespace-nowrap">全部</div>
+                        <div class="btn-emotion bg-yellow-50 text-yellow-500 mr-2 whitespace-nowrap">开心</div>
+                        <div class="btn-emotion bg-blue-50 text-blue-500 mr-2 whitespace-nowrap">悲伤</div>
+                        <div class="btn-emotion bg-red-50 text-red-500 mr-2 whitespace-nowrap">愤怒</div>
+                        <div class="btn-emotion bg-purple-50 text-purple-500 mr-2 whitespace-nowrap">焦虑</div>
+                    </div>
+
+                    <div class="emotion-card animate-fade-in">
+                        <div class="flex items-center mb-3">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full mr-3 object-cover border-2 border-pink-100" alt="用户头像">
+                            <div>
+                                <div class="font-medium">小雨</div>
+                                <div class="text-xs text-gray-500">2小时前</div>
+                            </div>
+                            <div class="ml-auto">
+                                <span class="bg-yellow-100 text-yellow-500 text-xs py-1 px-2 rounded-full">
+                                    <i class="far fa-smile mr-1"></i> 开心
+                                </span>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-3">今天终于完成了项目，感觉整个人都轻松了！阳光真好，心情也跟着明媚起来 ☀️</p>
+                        <img src="https://images.unsplash.com/photo-1604537466158-719b1972feb8?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-40 object-cover rounded-2xl mb-3" alt="分享图片">
+                        <div class="flex justify-between text-gray-500 text-sm">
+                            <div class="flex items-center hover:text-pink-400 transition duration-300">
+                                <i class="far fa-heart mr-1"></i> 23
+                            </div>
+                            <div class="flex items-center hover:text-blue-400 transition duration-300">
+                                <i class="far fa-comment mr-1"></i> 5
+                            </div>
+                            <div class="flex items-center hover:text-purple-400 transition duration-300">
+                                <i class="far fa-paper-plane mr-1"></i> 分享
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="emotion-card animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="flex items-center mb-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full mr-3 object-cover border-2 border-blue-100" alt="用户头像">
+                            <div>
+                                <div class="font-medium">星辰</div>
+                                <div class="text-xs text-gray-500">昨天 19:30</div>
+                            </div>
+                            <div class="ml-auto">
+                                <span class="bg-blue-100 text-blue-500 text-xs py-1 px-2 rounded-full">
+                                    <i class="far fa-sad-tear mr-1"></i> 悲伤
+                                </span>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-3">雨天总是让我想起很多往事，有时候真的很难释怀。不过听着雨声，心情也慢慢平静了下来。</p>
+                        <div class="flex justify-between text-gray-500 text-sm">
+                            <div class="flex items-center hover:text-pink-400 transition duration-300">
+                                <i class="far fa-heart mr-1"></i> 45
+                            </div>
+                            <div class="flex items-center hover:text-blue-400 transition duration-300">
+                                <i class="far fa-comment mr-1"></i> 12
+                            </div>
+                            <div class="flex items-center hover:text-purple-400 transition duration-300">
+                                <i class="far fa-paper-plane mr-1"></i> 分享
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon active">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情绪分析界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">情绪分析</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="cloud cloud-1" style="top: 15%; left: 5%;">
+                        <svg width="30" height="18" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#DBEAFE"/>
+                        </svg>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm mb-5 animate-fade-in">
+                        <div class="flex justify-between mb-3">
+                            <div class="text-gray-600 font-medium">本周情绪趋势</div>
+                            <div class="text-pink-400 text-sm">查看更多</div>
+                        </div>
+                        <div class="h-40 bg-gray-50 rounded-xl flex items-end justify-between p-3">
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 30%"></div>
+                                <div class="text-xs mt-1 text-gray-500">一</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 60%"></div>
+                                <div class="text-xs mt-1 text-gray-500">二</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 40%"></div>
+                                <div class="text-xs mt-1 text-gray-500">三</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 70%"></div>
+                                <div class="text-xs mt-1 text-gray-500">四</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 50%"></div>
+                                <div class="text-xs mt-1 text-gray-500">五</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 80%"></div>
+                                <div class="text-xs mt-1 text-gray-500">六</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-400 to-blue-400 rounded-t-lg" style="height: 65%"></div>
+                                <div class="text-xs mt-1 text-gray-500">日</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="text-gray-600 font-medium mb-4">情绪分布</div>
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-yellow-400 mr-2"></span>
+                                开心
+                            </div>
+                            <div class="text-sm text-gray-500">35%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-yellow-400 h-2.5 rounded-full" style="width: 35%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-gray-400 mr-2"></span>
+                                平静
+                            </div>
+                            <div class="text-sm text-gray-500">25%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-gray-400 h-2.5 rounded-full" style="width: 25%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
+                                焦虑
+                            </div>
+                            <div class="text-sm text-gray-500">20%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-purple-400 h-2.5 rounded-full" style="width: 20%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
+                                悲伤
+                            </div>
+                            <div class="text-sm text-gray-500">15%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-blue-400 h-2.5 rounded-full" style="width: 15%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-red-400 mr-2"></span>
+                                愤怒
+                            </div>
+                            <div class="text-sm text-gray-500">5%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5">
+                            <div class="bg-red-400 h-2.5 rounded-full" style="width: 5%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="text-gray-600 font-medium mb-3">情绪洞察</div>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            本周你的情绪整体偏向积极，开心的情绪占比最高。周六是你情绪最佳的一天，建议多参与类似的活动来保持良好心情。
+                        </p>
+                        <button class="mt-4 w-full bg-gradient-to-r from-pink-100 to-blue-100 text-pink-500 py-2.5 rounded-xl text-sm font-medium hover:from-pink-200 hover:to-blue-200 transition duration-300">
+                            查看详细报告
+                        </button>
+                    </div>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 心情日记界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">心情日记</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-1" style="top: 10%; right: 5%;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.6 20 4 16.4 4 12C4 7.6 7.6 4 12 4C16.4 4 20 7.6 20 12C20 16.4 16.4 20 12 20Z" fill="#FEE2E2" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex justify-between mb-5">
+                        <button class="btn-emotion bg-gradient-to-r from-pink-400 to-blue-400 text-white">
+                            <i class="fas fa-plus mr-1"></i> 新建日记
+                        </button>
+                        <button class="btn-emotion bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-300">
+                            <i class="fas fa-calendar-alt mr-1"></i> 日历视图
+                        </button>
+                    </div>
+
+                    <div class="diary-entry animate-fade-in">
+                        <div class="flex justify-between mb-2">
+                            <div class="font-medium text-gray-700">美好的一天</div>
+                            <div class="text-xs text-gray-500">今天 14:30</div>
+                        </div>
+                        <div class="flex mb-3">
+                            <span class="bg-yellow-100 text-yellow-500 text-xs py-1 px-2 rounded-full mr-2">
+                                <i class="far fa-smile mr-1"></i> 开心
+                            </span>
+                            <span class="bg-green-100 text-green-500 text-xs py-1 px-2 rounded-full">
+                                <i class="fas fa-sun mr-1"></i> 晴天
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-3 leading-relaxed">
+                            今天天气真好，和朋友一起去了公园野餐。阳光、微风、好友，一切都那么美好。这样的日子真希望能多一些...
+                        </p>
+                        <div class="flex">
+                            <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-16 h-16 object-cover rounded-xl mr-2 border border-pink-100" alt="日记图片">
+                            <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-16 h-16 object-cover rounded-xl border border-pink-100" alt="日记图片">
+                        </div>
+                    </div>
+
+                    <div class="diary-entry animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="flex justify-between mb-2">
+                            <div class="font-medium text-gray-700">思考人生</div>
+                            <div class="text-xs text-gray-500">昨天 21:15</div>
+                        </div>
+                        <div class="flex mb-3">
+                            <span class="bg-purple-100 text-purple-500 text-xs py-1 px-2 rounded-full mr-2">
+                                <i class="far fa-tired mr-1"></i> 疲惫
+                            </span>
+                            <span class="bg-blue-100 text-blue-500 text-xs py-1 px-2 rounded-full">
+                                <i class="fas fa-cloud-rain mr-1"></i> 雨天
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            连续工作了一周，今天终于可以休息了。窗外下着雨，我泡了杯茶，听着雨声，思考着未来的方向。有时候停下来思考也是一种奢侈...
+                        </p>
+                    </div>
+
+                    <div class="diary-entry animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="flex justify-between mb-2">
+                            <div class="font-medium text-gray-700">小确幸</div>
+                            <div class="text-xs text-gray-500">3天前</div>
+                        </div>
+                        <div class="flex mb-3">
+                            <span class="bg-yellow-100 text-yellow-500 text-xs py-1 px-2 rounded-full mr-2">
+                                <i class="far fa-smile mr-1"></i> 开心
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 text-xs py-1 px-2 rounded-full">
+                                <i class="fas fa-cloud mr-1"></i> 多云
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-3 leading-relaxed">
+                            今天在回家的路上，遇到了一只小猫咪，它跟着我走了一段路。这种偶然的小确幸总能让平凡的日子变得特别...
+                        </p>
+                        <div class="flex">
+                            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-16 h-16 object-cover rounded-xl border border-pink-100" alt="日记图片">
+                        </div>
+                    </div>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 匿名情绪倾诉界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">匿名倾诉</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="cloud cloud-2" style="bottom: 20%; right: 5%;">
+                        <svg width="35" height="21" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#FEE2E2"/>
+                        </svg>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-pink-50 to-blue-50 rounded-2xl p-4 mb-5 animate-fade-in">
+                        <p class="text-sm text-pink-600 mb-2 font-medium">
+                            <i class="fas fa-shield-alt mr-1"></i> 隐私保护
+                        </p>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            在匿名倾诉区，你的身份信息将被完全保护。这里是安全的情绪释放空间，说出你的心声。
+                        </p>
+                    </div>
+
+                    <div class="emotion-card animate-fade-in" style="animation-delay: 0.1s;">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-user-secret text-gray-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-700">匿名用户</div>
+                                <div class="text-xs text-gray-500">1小时前</div>
+                            </div>
+                            <div class="ml-auto">
+                                <span class="bg-blue-100 text-blue-500 text-xs py-1 px-2 rounded-full">
+                                    <i class="far fa-sad-tear mr-1"></i> 悲伤
+                                </span>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-3 leading-relaxed">
+                            最近工作压力太大了，感觉快要崩溃。每天都在担心会被裁员，晚上睡不好觉。不知道该怎么办...
+                        </p>
+                        <div class="flex justify-between text-gray-500 text-sm">
+                            <div class="flex items-center hover:text-pink-400 transition duration-300">
+                                <i class="far fa-heart mr-1"></i> 34
+                            </div>
+                            <div class="flex items-center hover:text-blue-400 transition duration-300">
+                                <i class="far fa-comment mr-1"></i> 8
+                            </div>
+                            <div class="flex items-center hover:text-green-400 transition duration-300">
+                                <i class="fas fa-hands-helping mr-1"></i> 支持
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="emotion-card animate-fade-in" style="animation-delay: 0.3s;">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-user-secret text-gray-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-700">匿名用户</div>
+                                <div class="text-xs text-gray-500">3小时前</div>
+                            </div>
+                            <div class="ml-auto">
+                                <span class="bg-red-100 text-red-500 text-xs py-1 px-2 rounded-full">
+                                    <i class="far fa-angry mr-1"></i> 愤怒
+                                </span>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-3 leading-relaxed">
+                            为什么总是我要迁就别人？今天又被领导批评了，明明不是我的错。真的很委屈，但又不敢说出来...
+                        </p>
+                        <div class="flex justify-between text-gray-500 text-sm">
+                            <div class="flex items-center hover:text-pink-400 transition duration-300">
+                                <i class="far fa-heart mr-1"></i> 56
+                            </div>
+                            <div class="flex items-center hover:text-blue-400 transition duration-300">
+                                <i class="far fa-comment mr-1"></i> 12
+                            </div>
+                            <div class="flex items-center hover:text-green-400 transition duration-300">
+                                <i class="fas fa-hands-helping mr-1"></i> 支持
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-gradient-to-r from-pink-400 to-blue-400 text-white py-3 rounded-full mt-5 hover:from-pink-500 hover:to-blue-500 transition duration-300 shadow-md font-medium animate-fade-in" style="animation-delay: 0.5s;">
+                        <i class="fas fa-feather-alt mr-1"></i> 发布我的匿名倾诉
+                    </button>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情绪支持系统界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">情绪支持</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-2" style="bottom: 15%; left: 5%;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.6 20 4 16.4 4 12C4 7.6 7.6 4 12 4C16.4 4 20 7.6 20 12C20 16.4 16.4 20 12 20Z" fill="#DBEAFE" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-4 shadow-sm mb-5 animate-fade-in">
+                        <div class="flex items-center mb-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-pink-100 to-blue-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-brain text-pink-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-700">情绪助手</div>
+                                <div class="text-xs text-gray-500">AI支持 · 随时在线</div>
+                            </div>
+                            <button class="ml-auto bg-gradient-to-r from-pink-400 to-blue-400 text-white text-sm py-1.5 px-4 rounded-full hover:from-pink-500 hover:to-blue-500 transition duration-300">
+                                对话
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            当你感到情绪低落时，可以随时与AI情绪助手交流，获取专业的情绪疏导和建议。
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-4 shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="text-gray-700 font-medium mb-4">推荐的情绪调节活动</div>
+
+                        <div class="flex items-center mb-4 animate-fade-in" style="animation-delay: 0.3s;">
+                            <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-tree text-green-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-700">5分钟冥想</div>
+                                <div class="text-xs text-gray-500">缓解焦虑 · 1.2万人已尝试</div>
+                            </div>
+                            <button class="ml-auto text-pink-400 text-lg">
+                                <i class="fas fa-play-circle"></i>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center mb-4 animate-fade-in" style="animation-delay: 0.4s;">
+                            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-lungs text-blue-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-700">深呼吸练习</div>
+                                <div class="text-xs text-gray-500">平静心情 · 8.5千人已尝试</div>
+                            </div>
+                            <button class="ml-auto text-pink-400 text-lg">
+                                <i class="fas fa-play-circle"></i>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center animate-fade-in" style="animation-delay: 0.5s;">
+                            <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-music text-purple-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-700">舒缓音乐</div>
+                                <div class="text-xs text-gray-500">放松身心 · 2.3万人已尝试</div>
+                            </div>
+                            <button class="ml-auto text-pink-400 text-lg">
+                                <i class="fas fa-play-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-4 shadow-sm animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="text-gray-700 font-medium mb-4">专业心理咨询</div>
+
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=100" class="w-10 h-10 rounded-full mr-3 object-cover" alt="心理咨询师头像">
+                            <div>
+                                <div class="font-medium text-gray-700">张医生</div>
+                                <div class="text-xs text-gray-500">心理咨询师</div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            张医生，您好，我最近感到很焦虑，不知道该怎么办。
+                        </p>
+                        <button class="mt-4 w-full bg-gradient-to-r from-pink-100 to-blue-100 text-pink-500 py-2.5 rounded-xl text-sm font-medium hover:from-pink-200 hover:to-blue-200 transition duration-300">
+                            开始咨询
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 个人中心界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <!-- 装饰元素 -->
+                    <div class="cloud cloud-1" style="top: 5%; right: 5%;">
+                        <svg width="30" height="18" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#FEE2E2"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-col items-center pt-8 pb-5 animate-fade-in">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80" class="w-20 h-20 rounded-full object-cover border-2 border-pink-300" alt="用户头像">
+                            <div class="absolute bottom-0 right-0 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                <i class="fas fa-camera text-xs"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 font-medium text-lg text-gray-700">小雨</div>
+                        <div class="text-gray-500 text-sm">今天感觉很开心 <i class="far fa-smile text-yellow-500"></i></div>
+
+                        <div class="flex mt-5 w-full justify-around">
+                            <div class="profile-stat">
+                                <div class="font-medium text-gray-700">128</div>
+                                <div class="text-xs text-gray-500">记录</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="font-medium text-gray-700">56</div>
+                                <div class="text-xs text-gray-500">关注</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="font-medium text-gray-700">89</div>
+                                <div class="text-xs text-gray-500">粉丝</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-pie text-pink-400 mr-3"></i>
+                                <div class="text-gray-700">情绪统计</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-book text-blue-400 mr-3"></i>
+                                <div class="text-gray-700">我的日记</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-medal text-yellow-400 mr-3"></i>
+                                <div class="text-gray-700">情绪徽章</div>
+                                <div class="ml-auto bg-gradient-to-r from-pink-400 to-red-400 text-white text-xs rounded-full px-2 py-0.5">新</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-bell text-purple-400 mr-3"></i>
+                                <div class="text-gray-700">通知设置</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-lock text-green-400 mr-3"></i>
+                                <div class="text-gray-700">隐私设置</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-question-circle text-blue-400 mr-3"></i>
+                                <div class="text-gray-700">帮助与反馈</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-gray-100 text-gray-600 py-3 rounded-xl hover:bg-gray-200 transition duration-300 font-medium animate-fade-in" style="animation-delay: 0.6s;">
+                        退出登录
+                    </button>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 聊天界面 -->
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="flex items-center mb-5">
+                        <button class="mr-3">
+                            <i class="fas fa-arrow-left text-gray-600"></i>
+                        </button>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-100 to-blue-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-brain text-pink-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-700">情绪助手</div>
+                                <div class="text-xs text-green-500">在线</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-1" style="top: 30%; left: 5%; opacity: 0.3;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.6 20 4 16.4 4 12C4 7.6 7.6 4 12 4C16.4 4 20 7.6 20 12C20 16.4 16.4 20 12 20Z" fill="#FEE2E2" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-col h-[calc(100%-120px)] overflow-y-auto mb-4">
+                        <div class="flex justify-start mb-3 animate-fade-in">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3.5 max-w-[80%]">
+                                <p class="text-sm text-gray-700 leading-relaxed">你好！我是你的情绪助手，今天感觉如何？有什么想和我分享的吗？</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end mb-3 animate-fade-in" style="animation-delay: 0.2s;">
+                            <div class="bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-2xl rounded-tr-none p-3.5 max-w-[80%]">
+                                <p class="text-sm leading-relaxed">最近工作压力有点大，感觉很疲惫，晚上也睡不好。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-start mb-3 animate-fade-in" style="animation-delay: 0.4s;">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3.5 max-w-[80%]">
+                                <p class="text-sm text-gray-700 leading-relaxed">我理解你的感受。工作压力确实会影响我们的情绪和睡眠。你能告诉我具体是什么让你感到压力吗？</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end mb-3 animate-fade-in" style="animation-delay: 0.6s;">
+                            <div class="bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-2xl rounded-tr-none p-3.5 max-w-[80%]">
+                                <p class="text-sm leading-relaxed">最近项目deadline很紧，我担心完不成任务。而且我觉得自己能力不够，害怕让团队失望。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-start animate-fade-in" style="animation-delay: 0.8s;">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3.5 max-w-[80%]">
+                                <p class="text-sm text-gray-700 leading-relaxed">这种担忧很常见，但请记住，你比自己想象的更有能力。我建议你可以：</p>
+                                <ol class="text-sm list-decimal pl-5 mt-2 text-gray-700 leading-relaxed">
+                                    <li>将大任务分解成小步骤，一步步完成</li>
+                                    <li>每天给自己设定合理的目标</li>
+                                    <li>尝试5分钟的深呼吸练习来缓解焦虑</li>
+                                    <li>与团队坦诚沟通你的顾虑</li>
+                                </ol>
+                                <p class="text-sm mt-2 text-gray-700 leading-relaxed">要不要试试我推荐的放松练习？</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-4 bg-white border-t border-gray-100">
+                        <div class="flex items-center">
+                            <button class="mr-2 text-gray-400 hover:text-pink-400 transition duration-300">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <input type="text" placeholder="输入消息..." class="flex-1 border border-gray-200 rounded-full py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent transition duration-300 text-gray-700">
+                            <button class="ml-2 w-10 h-10 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full flex items-center justify-center hover:from-pink-500 hover:to-blue-500 transition duration-300">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪分析 - 情绪化社交软件</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center my-8 gradient-text">情绪分析界面</h1>
+
+        <div class="flex justify-center">
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">情绪分析</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="cloud cloud-1" style="top: 15%; left: 5%;">
+                        <svg width="30" height="18" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#DBEAFE"/>
+                        </svg>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm mb-5 animate-fade-in">
+                        <div class="flex justify-between mb-3">
+                            <div class="text-gray-600 font-medium">本周情绪趋势</div>
+                            <div class="text-pink-400 text-sm">查看更多</div>
+                        </div>
+                        <div class="h-40 bg-gray-50 rounded-xl flex items-end justify-between p-3">
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 30%"></div>
+                                <div class="text-xs mt-1 text-gray-500">一</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 60%"></div>
+                                <div class="text-xs mt-1 text-gray-500">二</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 40%"></div>
+                                <div class="text-xs mt-1 text-gray-500">三</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 70%"></div>
+                                <div class="text-xs mt-1 text-gray-500">四</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 50%"></div>
+                                <div class="text-xs mt-1 text-gray-500">五</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-300 to-blue-300 rounded-t-lg" style="height: 80%"></div>
+                                <div class="text-xs mt-1 text-gray-500">六</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 bg-gradient-to-t from-pink-400 to-blue-400 rounded-t-lg" style="height: 65%"></div>
+                                <div class="text-xs mt-1 text-gray-500">日</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="text-gray-600 font-medium mb-4">情绪分布</div>
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-yellow-400 mr-2"></span>
+                                开心
+                            </div>
+                            <div class="text-sm text-gray-500">35%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-yellow-400 h-2.5 rounded-full" style="width: 35%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-gray-400 mr-2"></span>
+                                平静
+                            </div>
+                            <div class="text-sm text-gray-500">25%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-gray-400 h-2.5 rounded-full" style="width: 25%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
+                                焦虑
+                            </div>
+                            <div class="text-sm text-gray-500">20%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-purple-400 h-2.5 rounded-full" style="width: 20%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-blue-400 mr-2"></span>
+                                悲伤
+                            </div>
+                            <div class="text-sm text-gray-500">15%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+                            <div class="bg-blue-400 h-2.5 rounded-full" style="width: 15%"></div>
+                        </div>
+
+                        <div class="flex justify-between mb-2">
+                            <div class="text-sm flex items-center">
+                                <span class="inline-block w-3 h-3 rounded-full bg-red-400 mr-2"></span>
+                                愤怒
+                            </div>
+                            <div class="text-sm text-gray-500">5%</div>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-2.5">
+                            <div class="bg-red-400 h-2.5 rounded-full" style="width: 5%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-5 shadow-sm animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="text-gray-600 font-medium mb-3">情绪洞察</div>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            本周你的情绪整体偏向积极，开心的情绪占比最高。周六是你情绪最佳的一天，建议多参与类似的活动来保持良好心情。
+                        </p>
+                        <button class="mt-4 w-full bg-gradient-to-r from-pink-100 to-blue-100 text-pink-500 py-2.5 rounded-xl text-sm font-medium hover:from-pink-200 hover:to-blue-200 transition duration-300">
+                            查看详细报告
+                        </button>
+                    </div>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="preview.html" class="text-pink-500 hover:text-pink-600 transition duration-300">返回预览页面</a>
+        </div>
+    </div>
+</body>
+</html>

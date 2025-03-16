@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 情绪化社交软件</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center my-8 gradient-text">欢迎/登录界面</h1>
+
+        <div class="flex justify-center">
+            <div class="phone-frame">
+                <div class="screen bg-gradient-to-b from-pink-50 to-blue-50">
+                    <!-- 装饰元素 -->
+                    <div class="cloud cloud-1">
+                        <svg width="50" height="30" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#E0F2FE"/>
+                        </svg>
+                    </div>
+                    <div class="cloud cloud-2">
+                        <svg width="40" height="24" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#FEE2E2"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center h-full relative z-10">
+                        <div class="animate-float mb-8">
+                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="40" cy="40" r="40" fill="#FEE2E2" fill-opacity="0.5"/>
+                                <path d="M40 20C31.2 20 24 27.2 24 36C24 44.8 31.2 52 40 52C48.8 52 56 44.8 56 36C56 27.2 48.8 20 40 20ZM40 48C33.4 48 28 42.6 28 36C28 29.4 33.4 24 40 24C46.6 24 52 29.4 52 36C52 42.6 46.6 48 40 48Z" fill="#F9A8D4"/>
+                                <path d="M34 32C35.1046 32 36 31.1046 36 30C36 28.8954 35.1046 28 34 28C32.8954 28 32 28.8954 32 30C32 31.1046 32.8954 32 34 32Z" fill="#F9A8D4"/>
+                                <path d="M46 32C47.1046 32 48 31.1046 48 30C48 28.8954 47.1046 28 46 28C44.8954 28 44 28.8954 44 30C44 31.1046 44.8954 32 46 32Z" fill="#F9A8D4"/>
+                                <path d="M40 44C43.3 44 46 41.3 46 38H34C34 41.3 36.7 44 40 44Z" fill="#F9A8D4"/>
+                                <path d="M60 36C60 32.7 58.8 29.6 56.8 27.2C57.6 25.2 58 23 58 20.8C58 9.4 48.6 0 37.2 0C29.4 0 22.4 4 18.8 10C8.2 11 0 20 0 31C0 42.6 9.4 52 21 52H54C68.4 52 80 40.4 80 26C80 16.4 71.6 8.4 61 8C60.4 16.8 60 26.8 60 36Z" fill="#E0F2FE" fill-opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold gradient-text mb-4">心情天气</h2>
+                        <p class="text-gray-600 text-center mb-8 px-6">记录每一天的情绪变化，与志同道合的人分享美好</p>
+
+                        <button class="w-4/5 btn-primary py-3 rounded-full mb-3 font-medium">
+                            登录
+                        </button>
+                        <button class="w-4/5 btn-secondary py-3 rounded-full font-medium">
+                            注册
+                        </button>
+
+                        <p class="mt-8 text-sm text-gray-500 px-8 text-center">继续使用即表示您同意我们的<span class="text-pink-400">服务条款</span>和<span class="text-pink-400">隐私政策</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="preview.html" class="text-pink-500 hover:text-pink-600 transition duration-300">返回预览页面</a>
+        </div>
+    </div>
+</body>
+</html>

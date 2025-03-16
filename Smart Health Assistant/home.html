@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 智能健康助手</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #F5F7FA;
+            color: #1A202C;
+            padding-bottom: 20px;
+        }
+        .health-card {
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .health-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.3s;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="container mx-auto px-4 pt-4 pb-20">
+        <!-- 欢迎区域 -->
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">你好，李明</h1>
+                <p class="text-gray-500">今天是个健康的好日子</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+        </div>
+
+        <!-- 健康概览卡片 -->
+        <div class="health-card bg-gradient-to-r from-blue-500 to-blue-600 p-5 mb-6 text-white">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold">今日健康概览</h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl font-bold">7,842</div>
+                    <div class="text-sm opacity-80">步数</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold">68<span class="text-sm">bpm</span></div>
+                    <div class="text-sm opacity-80">心率</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold">7.2<span class="text-sm">h</span></div>
+                    <div class="text-sm opacity-80">睡眠</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动目标 -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">活动目标</h2>
+                <span class="text-blue-500 text-sm">查看全部</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="health-card bg-white p-4">
+                    <div class="flex items-center">
+                        <div class="relative w-16 h-16 mr-3">
+                            <svg class="progress-ring" width="60" height="60">
+                                <circle class="progress-ring-circle" stroke="#E2E8F0" cx="30" cy="30" r="24" fill="transparent" />
+                                <circle class="progress-ring-circle" stroke="#3B82F6" cx="30" cy="30" r="24" fill="transparent" stroke-dasharray="150.8" stroke-dashoffset="45.24" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center text-sm font-semibold">70%</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-sm">每日步数</div>
+                            <div class="font-semibold">7,842 / 10,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="health-card bg-white p-4">
+                    <div class="flex items-center">
+                        <div class="relative w-16 h-16 mr-3">
+                            <svg class="progress-ring" width="60" height="60">
+                                <circle class="progress-ring-circle" stroke="#E2E8F0" cx="30" cy="30" r="24" fill="transparent" />
+                                <circle class="progress-ring-circle" stroke="#10B981" cx="30" cy="30" r="24" fill="transparent" stroke-dasharray="150.8" stroke-dashoffset="90.48" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center text-sm font-semibold">40%</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-sm">活动时间</div>
+                            <div class="font-semibold">24 / 60 分钟</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 健康趋势 -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">健康趋势</h2>
+                <div class="flex space-x-2">
+                    <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">周</span>
+                    <span class="text-sm text-white bg-blue-500 px-2 py-1 rounded-full">月</span>
+                    <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">年</span>
+                </div>
+            </div>
+
+            <div class="health-card bg-white p-4">
+                <canvas id="healthChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- 健康提醒 -->
+        <div>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">健康提醒</h2>
+                <span class="text-blue-500 text-sm">管理</span>
+            </div>
+
+            <div class="health-card bg-white p-4 mb-3">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"></path><path d="M9 17v-6"></path><path d="M12 17v-2"></path><path d="M15 17v-4"></path><path d="M4 11h16"></path></svg>
+                    </div>
+                    <div>
+                        <div class="font-semibold">血压检测提醒</div>
+                        <div class="text-gray-500 text-sm">今天 14:30</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="health-card bg-white p-4">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div>
+                        <div class="font-semibold">医生在线咨询</div>
+                        <div class="text-gray-500 text-sm">明天 10:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 健康趋势图表
+        const ctx = document.getElementById('healthChart').getContext('2d');
+        const healthChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                datasets: [{
+                    label: '步数',
+                    data: [6500, 5900, 8000, 7200, 7800, 7842],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪支持 - 情绪化社交软件</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center my-8 gradient-text">情绪支持界面</h1>
+
+        <div class="flex justify-center">
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">情绪支持</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-2" style="bottom: 15%; left: 5%;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.6 20 4 16.4 4 12C4 7.6 7.6 4 12 4C16.4 4 20 7.6 20 12C20 16.4 16.4 20 12 20Z" fill="#DBEAFE" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-4 shadow-sm mb-5 animate-fade-in">
+                        <div class="flex items-center mb-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-pink-100 to-blue-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-brain text-pink-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-700">情绪助手</div>
+                                <div class="text-xs text-gray-500">AI支持 · 随时在线</div>
+                            </div>
+                            <button class="ml-auto bg-gradient-to-r from-pink-400 to-blue-400 text-white text-sm py-1.5 px-4 rounded-full hover:from-pink-500 hover:to-blue-500 transition duration-300">
+                                对话
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            当你感到情绪低落时，可以随时与AI情绪助手交流，获取专业的情绪疏导和建议。
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-4 shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="text-gray-700 font-medium mb-4">推荐的情绪调节活动</div>
+
+                        <div class="flex items-center mb-4 animate-fade-in" style="animation-delay: 0.3s;">
+                            <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-tree text-green-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-700">5分钟冥想</div>
+                                <div class="text-xs text-gray-500">缓解焦虑 · 1.2万人已尝试</div>
+                            </div>
+                            <button class="ml-auto text-pink-400 text-lg">
+                                <i class="fas fa-play-circle"></i>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center mb-4 animate-fade-in" style="animation-delay: 0.4s;">
+                            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-lungs text-blue-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-700">深呼吸练习</div>
+                                <div class="text-xs text-gray-500">平静心情 · 8.5千人已尝试</div>
+                            </div>
+                            <button class="ml-auto text-pink-400 text-lg">
+                                <i class="fas fa-play-circle"></i>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center animate-fade-in" style="animation-delay: 0.5s;">
+                            <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-music text-purple-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-700">舒缓音乐</div>
+                                <div class="text-xs text-gray-500">放松身心 · 2.3万人已尝试</div>
+                            </div>
+                            <button class="ml-auto text-pink-400 text-lg">
+                                <i class="fas fa-play-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-4 shadow-sm animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="text-gray-700 font-medium mb-4">专业心理咨询</div>
+
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=100" class="w-10 h-10 rounded-full mr-3 object-cover" alt="心理咨询师头像">
+                            <div>
+                                <div class="font-medium text-gray-700">张医生</div>
+                                <div class="text-xs text-gray-500">心理咨询师</div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            张医生，您好，我最近感到很焦虑，不知道该怎么办。
+                        </p>
+                        <button class="mt-4 w-full bg-gradient-to-r from-pink-100 to-blue-100 text-pink-500 py-2.5 rounded-xl text-sm font-medium hover:from-pink-200 hover:to-blue-200 transition duration-300">
+                            开始咨询
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="preview.html" class="text-pink-500 hover:text-pink-600 transition duration-300">返回预览页面</a>
+        </div>
+    </div>
+</body>
+</html>

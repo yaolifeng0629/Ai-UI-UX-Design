@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据分析 - 智能健康助手</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #FFFFFF;
+            color: #1A202C;
+            padding-bottom: 20px;
+        }
+        .analysis-card {
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .tab-button {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 pt-4 pb-20">
+        <!-- 页面标题 -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">健康数据分析</h1>
+            <p class="text-gray-500">深入了解您的健康状况</p>
+        </div>
+
+        <!-- 数据类型选择器 -->
+        <div class="flex space-x-2 mb-6 overflow-x-auto py-2">
+            <button class="tab-button active">身体活动</button>
+            <button class="tab-button bg-gray-100 text-gray-600">心率</button>
+            <button class="tab-button bg-gray-100 text-gray-600">睡眠</button>
+            <button class="tab-button bg-gray-100 text-gray-600">血压</button>
+            <button class="tab-button bg-gray-100 text-gray-600">体重</button>
+        </div>
+
+        <!-- 时间范围选择器 -->
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex space-x-2">
+                <button class="tab-button bg-gray-100 text-gray-600">日</button>
+                <button class="tab-button active">周</button>
+                <button class="tab-button bg-gray-100 text-gray-600">月</button>
+                <button class="tab-button bg-gray-100 text-gray-600">年</button>
+            </div>
+            <div class="flex items-center text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                <span class="text-sm">6月1日-6月7日</span>
+            </div>
+        </div>
+
+        <!-- 主要数据图表 -->
+        <div class="analysis-card bg-white p-4 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">每日步数</h2>
+                <div class="text-sm text-gray-500">平均: 8,245 步</div>
+            </div>
+            <canvas id="stepsChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- 数据详情卡片 -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="analysis-card bg-white p-4">
+                <div class="text-gray-500 text-sm mb-1">总步数</div>
+                <div class="text-2xl font-bold text-gray-800">57,715</div>
+                <div class="text-xs text-green-500 flex items-center mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m18 15-6-6-6 6"/></svg>
+                    比上周增加 12%
+                </div>
+            </div>
+
+            <div class="analysis-card bg-white p-4">
+                <div class="text-gray-500 text-sm mb-1">总距离</div>
+                <div class="text-2xl font-bold text-gray-800">38.2 <span class="text-lg">公里</span></div>
+                <div class="text-xs text-green-500 flex items-center mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m18 15-6-6-6 6"/></svg>
+                    比上周增加 8%
+                </div>
+            </div>
+
+            <div class="analysis-card bg-white p-4">
+                <div class="text-gray-500 text-sm mb-1">活动时间</div>
+                <div class="text-2xl font-bold text-gray-800">5.3 <span class="text-lg">小时</span></div>
+                <div class="text-xs text-green-500 flex items-center mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m18 15-6-6-6 6"/></svg>
+                    比上周增加 15%
+                </div>
+            </div>
+
+            <div class="analysis-card bg-white p-4">
+                <div class="text-gray-500 text-sm mb-1">消耗热量</div>
+                <div class="text-2xl font-bold text-gray-800">2,845 <span class="text-lg">千卡</span></div>
+                <div class="text-xs text-green-500 flex items-center mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m18 15-6-6-6 6"/></svg>
+                    比上周增加 10%
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动分布 -->
+        <div class="analysis-card bg-white p-4 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">活动强度分布</h2>
+                <div class="text-sm text-blue-500">详情</div>
+            </div>
+            <canvas id="activityChart" width="400" height="200"></canvas>
+            <div class="grid grid-cols-3 gap-2 mt-4">
+                <div class="text-center">
+                    <div class="text-sm text-gray-500">轻度活动</div>
+                    <div class="font-semibold">3.2 小时</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-sm text-gray-500">中度活动</div>
+                    <div class="font-semibold">1.5 小时</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-sm text-gray-500">高强度活动</div>
+                    <div class="font-semibold">0.6 小时</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 健康建议 -->
+        <div class="analysis-card bg-white p-4">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.743-.95l.09-.73c.112-.89-.624-1.68-1.469-1.576l-3.617.429c-.66.077-1.223.544-1.388 1.188l-.344 1.344c-.201.788.046 1.626.636 2.172.59.546 1.436.736 2.173.49l2.536-.84"></path><path d="M5.27 15.69l-1.627 1.627c-.967.967-.967 2.535 0 3.496.967.969 2.536.969 3.496 0l1.627-1.62"></path><path d="M8.903 12.792l.723-.723c.967-.968.967-2.535 0-3.496-.967-.967-2.535-.967-3.496 0l-1.627 1.627"></path><path d="M18.04 6.46 6.46 18.04"></path></svg>
+                </div>
+                <h2 class="text-lg font-semibold text-gray-800">AI健康建议</h2>
+            </div>
+
+            <div class="mb-4 p-3 bg-blue-50 rounded-lg">
+                <p class="text-gray-700">根据您的活动数据分析，建议增加每周高强度运动时间，以提高心肺功能。尝试每周至少进行3次30分钟的有氧运动。</p>
+            </div>
+
+            <div class="flex justify-between">
+                <button class="text-blue-500 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" x2="12" y1="3" y2="15"></line></svg>
+                    保存报告
+                </button>
+                <button class="text-blue-500 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" x2="12" y1="2" y2="15"></line></svg>
+                    分享
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 步数图表
+        const stepsCtx = document.getElementById('stepsChart').getContext('2d');
+        const stepsChart = new Chart(stepsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                datasets: [{
+                    label: '步数',
+                    data: [7823, 8456, 9102, 7654, 8932, 7245, 8503],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(59, 130, 246, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(59, 130, 246, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // 活动强度分布图表
+        const activityCtx = document.getElementById('activityChart').getContext('2d');
+        const activityChart = new Chart(activityCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['轻度活动', '中度活动', '高强度活动'],
+                datasets: [{
+                    data: [60, 28, 12],
+                    backgroundColor: [
+                        'rgba(96, 165, 250, 0.7)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(37, 99, 235, 0.9)'
+                    ],
+                    borderColor: [
+                        'rgba(96, 165, 250, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(37, 99, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+    </script>
+</body>
+</html>

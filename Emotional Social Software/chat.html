@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天界面 - 情绪化社交软件</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center my-8 gradient-text">聊天界面</h1>
+
+        <div class="flex justify-center">
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="flex items-center mb-5">
+                        <button class="mr-3">
+                            <i class="fas fa-arrow-left text-gray-600"></i>
+                        </button>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-100 to-blue-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-brain text-pink-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-700">情绪助手</div>
+                                <div class="text-xs text-green-500">在线</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-1" style="top: 30%; left: 5%; opacity: 0.3;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.6 20 4 16.4 4 12C4 7.6 7.6 4 12 4C16.4 4 20 7.6 20 12C20 16.4 16.4 20 12 20Z" fill="#FEE2E2" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-col h-[calc(100%-120px)] overflow-y-auto mb-4">
+                        <div class="flex justify-start mb-3 animate-fade-in">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3.5 max-w-[80%]">
+                                <p class="text-sm text-gray-700 leading-relaxed">你好！我是你的情绪助手，今天感觉如何？有什么想和我分享的吗？</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end mb-3 animate-fade-in" style="animation-delay: 0.2s;">
+                            <div class="bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-2xl rounded-tr-none p-3.5 max-w-[80%]">
+                                <p class="text-sm leading-relaxed">最近工作压力有点大，感觉很疲惫，晚上也睡不好。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-start mb-3 animate-fade-in" style="animation-delay: 0.4s;">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3.5 max-w-[80%]">
+                                <p class="text-sm text-gray-700 leading-relaxed">我理解你的感受。工作压力确实会影响我们的情绪和睡眠。你能告诉我具体是什么让你感到压力吗？</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end mb-3 animate-fade-in" style="animation-delay: 0.6s;">
+                            <div class="bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-2xl rounded-tr-none p-3.5 max-w-[80%]">
+                                <p class="text-sm leading-relaxed">最近项目deadline很紧，我担心完不成任务。而且我觉得自己能力不够，害怕让团队失望。</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-start animate-fade-in" style="animation-delay: 0.8s;">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3.5 max-w-[80%]">
+                                <p class="text-sm text-gray-700 leading-relaxed">这种担忧很常见，但请记住，你比自己想象的更有能力。我建议你可以：</p>
+                                <ol class="text-sm list-decimal pl-5 mt-2 text-gray-700 leading-relaxed">
+                                    <li>将大任务分解成小步骤，一步步完成</li>
+                                    <li>每天给自己设定合理的目标</li>
+                                    <li>尝试5分钟的深呼吸练习来缓解焦虑</li>
+                                    <li>与团队坦诚沟通你的顾虑</li>
+                                </ol>
+                                <p class="text-sm mt-2 text-gray-700 leading-relaxed">要不要试试我推荐的放松练习？</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-4 bg-white border-t border-gray-100">
+                        <div class="flex items-center">
+                            <button class="mr-2 text-gray-400 hover:text-pink-400 transition duration-300">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <input type="text" placeholder="输入消息..." class="flex-1 border border-gray-200 rounded-full py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent transition duration-300 text-gray-700">
+                            <button class="ml-2 w-10 h-10 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full flex items-center justify-center hover:from-pink-500 hover:to-blue-500 transition duration-300">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="preview.html" class="text-pink-500 hover:text-pink-600 transition duration-300">返回预览页面</a>
+        </div>
+    </div>
+</body>
+</html>

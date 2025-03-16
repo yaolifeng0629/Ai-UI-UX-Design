@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心情日记 - 情绪化社交软件</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center my-8 gradient-text">心情日记界面</h1>
+
+        <div class="flex justify-center">
+            <div class="phone-frame">
+                <div class="screen">
+                    <div class="screen-title">心情日记</div>
+
+                    <!-- 装饰元素 -->
+                    <div class="leaf leaf-1" style="top: 10%; right: 5%;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.6 20 4 16.4 4 12C4 7.6 7.6 4 12 4C16.4 4 20 7.6 20 12C20 16.4 16.4 20 12 20Z" fill="#FEE2E2" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex justify-between mb-5">
+                        <button class="btn-emotion bg-gradient-to-r from-pink-400 to-blue-400 text-white">
+                            <i class="fas fa-plus mr-1"></i> 新建日记
+                        </button>
+                        <button class="btn-emotion bg-gray-100 text-gray-600 hover:bg-gray-200 transition duration-300">
+                            <i class="fas fa-calendar-alt mr-1"></i> 日历视图
+                        </button>
+                    </div>
+
+                    <div class="diary-entry animate-fade-in">
+                        <div class="flex justify-between mb-2">
+                            <div class="font-medium text-gray-700">美好的一天</div>
+                            <div class="text-xs text-gray-500">今天 14:30</div>
+                        </div>
+                        <div class="flex mb-3">
+                            <span class="bg-yellow-100 text-yellow-500 text-xs py-1 px-2 rounded-full mr-2">
+                                <i class="far fa-smile mr-1"></i> 开心
+                            </span>
+                            <span class="bg-green-100 text-green-500 text-xs py-1 px-2 rounded-full">
+                                <i class="fas fa-sun mr-1"></i> 晴天
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-3 leading-relaxed">
+                            今天天气真好，和朋友一起去了公园野餐。阳光、微风、好友，一切都那么美好。这样的日子真希望能多一些...
+                        </p>
+                        <div class="flex">
+                            <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-16 h-16 object-cover rounded-xl mr-2 border border-pink-100" alt="日记图片">
+                            <img src="https://images.unsplash.com/photo-1532635241-17e820acc59f?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-16 h-16 object-cover rounded-xl border border-pink-100" alt="日记图片">
+                        </div>
+                    </div>
+
+                    <div class="diary-entry animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="flex justify-between mb-2">
+                            <div class="font-medium text-gray-700">思考人生</div>
+                            <div class="text-xs text-gray-500">昨天 21:15</div>
+                        </div>
+                        <div class="flex mb-3">
+                            <span class="bg-purple-100 text-purple-500 text-xs py-1 px-2 rounded-full mr-2">
+                                <i class="far fa-tired mr-1"></i> 疲惫
+                            </span>
+                            <span class="bg-blue-100 text-blue-500 text-xs py-1 px-2 rounded-full">
+                                <i class="fas fa-cloud-rain mr-1"></i> 雨天
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            连续工作了一周，今天终于可以休息了。窗外下着雨，我泡了杯茶，听着雨声，思考着未来的方向。有时候停下来思考也是一种奢侈...
+                        </p>
+                    </div>
+
+                    <div class="diary-entry animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="flex justify-between mb-2">
+                            <div class="font-medium text-gray-700">小确幸</div>
+                            <div class="text-xs text-gray-500">3天前</div>
+                        </div>
+                        <div class="flex mb-3">
+                            <span class="bg-yellow-100 text-yellow-500 text-xs py-1 px-2 rounded-full mr-2">
+                                <i class="far fa-smile mr-1"></i> 开心
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 text-xs py-1 px-2 rounded-full">
+                                <i class="fas fa-cloud mr-1"></i> 多云
+                            </span>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-3 leading-relaxed">
+                            今天在回家的路上，遇到了一只小猫咪，它跟着我走了一段路。这种偶然的小确幸总能让平凡的日子变得特别...
+                        </p>
+                        <div class="flex">
+                            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="w-16 h-16 object-cover rounded-xl border border-pink-100" alt="日记图片">
+                        </div>
+                    </div>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="preview.html" class="text-pink-500 hover:text-pink-600 transition duration-300">返回预览页面</a>
+        </div>
+    </div>
+</body>
+</html>

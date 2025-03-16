@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 情绪化社交软件</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="text-3xl font-bold text-center my-8 gradient-text">个人中心界面</h1>
+
+        <div class="flex justify-center">
+            <div class="phone-frame">
+                <div class="screen">
+                    <!-- 装饰元素 -->
+                    <div class="cloud cloud-1" style="top: 5%; right: 5%;">
+                        <svg width="30" height="18" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 25C4.5 25 0 20.5 0 15C0 9.5 4.5 5 10 5C12.5 5 14.5 6 16 7.5C17.5 3 22 0 27 0C33.5 0 39 5.5 39 12C39 12.5 39 13 38.5 13.5C45 14.5 50 20 50 26.5C50 28.5 49.5 30 48.5 30H10C7 30 4.5 28 3 25.5C5 25.5 7.5 25.5 10 25Z" fill="#FEE2E2"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex flex-col items-center pt-8 pb-5 animate-fade-in">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80" class="w-20 h-20 rounded-full object-cover border-2 border-pink-300" alt="用户头像">
+                            <div class="absolute bottom-0 right-0 bg-gradient-to-r from-pink-400 to-blue-400 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                                <i class="fas fa-camera text-xs"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 font-medium text-lg text-gray-700">小雨</div>
+                        <div class="text-gray-500 text-sm">今天感觉很开心 <i class="far fa-smile text-yellow-500"></i></div>
+
+                        <div class="flex mt-5 w-full justify-around">
+                            <div class="profile-stat">
+                                <div class="font-medium text-gray-700">128</div>
+                                <div class="text-xs text-gray-500">记录</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="font-medium text-gray-700">56</div>
+                                <div class="text-xs text-gray-500">关注</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="font-medium text-gray-700">89</div>
+                                <div class="text-xs text-gray-500">粉丝</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-pie text-pink-400 mr-3"></i>
+                                <div class="text-gray-700">情绪统计</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-book text-blue-400 mr-3"></i>
+                                <div class="text-gray-700">我的日记</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-medal text-yellow-400 mr-3"></i>
+                                <div class="text-gray-700">情绪徽章</div>
+                                <div class="ml-auto bg-gradient-to-r from-pink-400 to-red-400 text-white text-xs rounded-full px-2 py-0.5">新</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm mb-5 animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-bell text-purple-400 mr-3"></i>
+                                <div class="text-gray-700">通知设置</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 border-b border-gray-50">
+                            <div class="flex items-center">
+                                <i class="fas fa-lock text-green-400 mr-3"></i>
+                                <div class="text-gray-700">隐私设置</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-question-circle text-blue-400 mr-3"></i>
+                                <div class="text-gray-700">帮助与反馈</div>
+                                <i class="fas fa-chevron-right text-gray-300 ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-gray-100 text-gray-600 py-3 rounded-xl hover:bg-gray-200 transition duration-300 font-medium animate-fade-in" style="animation-delay: 0.6s;">
+                        退出登录
+                    </button>
+
+                    <div class="nav-bottom">
+                        <div class="nav-icon">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>记录</span>
+                        </div>
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span>分析</span>
+                        </div>
+                        <div class="nav-icon active">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>我的</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="preview.html" class="text-pink-500 hover:text-pink-600 transition duration-300">返回预览页面</a>
+        </div>
+    </div>
+</body>
+</html>
