@@ -2,17 +2,17 @@
 
 ## 项目介绍
 
-### 情绪化社交软件
+### [情绪化社交软件](./Emotional%20Social%20Software/README.md)
 
 这是一个治愈系风格的情绪化社交软件原型设计，旨在帮助用户记录、分享和管理自己的情绪状态。
 
 ![](./Emotional%20Social%20Software/screenshot.png)
 
-### 智能健康助手
+### [智能健康助手](./Smart%20Health%20Assistant/README.md)
 
 一个智能健康助手应用原型，提供健康数据监测、分析和可视化功能。
 
-![](./Emotional%20Social%20Software/screenshot.png)
+![](./Smart%20Health%20Assistant/screenshot.png)
 
 ### 如何将 HTML 文件转换为 Figma 文件
 

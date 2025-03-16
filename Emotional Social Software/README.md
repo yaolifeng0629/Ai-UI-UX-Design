@@ -20,19 +20,13 @@
 
 ## 🚀 快速开始
 
-1. 克隆本仓库
-
-```bash
-git clone https://github.com/yourusername/emotional-social-software.git
-```
-
-2. 打开项目目录
+1. 打开项目目录
 
 ```bash
 cd emotional-social-software
 ```
 
-3. 在浏览器中打开
+2. 在浏览器中打开
 
 ```bash
 index.html
