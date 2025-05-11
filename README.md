@@ -14,6 +14,12 @@
 
 ![](./Smart%20Health%20Assistant/screenshot.png)
 
+### [AI证件照生成器](./AI%20Photo%20Generation/README.md) | [预览](./AI%20Photo%20Generation/index.html)
+
+一个 AI 驱动的证件照生成器，用户只需上传照片，系统会自动生成符合要求的证件照。
+
+![](./AI%20Photo%20Generation/screenshot.png)
+
 ### 如何将 HTML 文件转换为 Figma 文件
 
 -   1. 部署当前站点，拿到网站的 URL

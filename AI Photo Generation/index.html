@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI证件照生成器</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .upload-area {
+      transition: all 0.3s ease;
+    }
+    .upload-area:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .btn-generate {
+      transition: all 0.3s ease;
+    }
+    .btn-generate:hover {
+      transform: translateY(-2px);
+    }
+    .btn-generate:active {
+      transform: translateY(1px);
+    }
+    .result-container {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    .result-container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .image-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .image-card:hover {
+      transform: scale(1.05);
+    }
+    .preview-option {
+      transition: all 0.2s ease;
+    }
+    .preview-option:hover {
+      transform: translateY(-3px);
+    }
+    .preview-option.active {
+      border-color: #3b82f6;
+    }
+    .history-item {
+      transition: all 0.3s ease;
+    }
+    .history-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .bg-option {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .bg-option:hover {
+      transform: scale(1.1);
+    }
+    .bg-option.active {
+      border: 2px solid #3b82f6;
+    }
+    .comparison-tab {
+      transition: all 0.2s ease;
+    }
+    .comparison-tab.active {
+      background-color: #3b82f6;
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <i class="fas fa-id-card text-2xl mr-3"></i>
+          <h1 class="text-2xl font-bold">AI证件照生成器</h1>
+        </div>
+        <nav>
+          <ul class="flex space-x-6">
+            <li><a href="#" class="hover:text-blue-200 transition-colors">首页</a></li>
+            <li><a href="#" class="hover:text-blue-200 transition-colors">服务</a></li>
+            <li><a href="#" class="hover:text-blue-200 transition-colors">关于我们</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-10">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">一键生成专业证件照</h2>
+        <p class="text-gray-600">请在下方上传图片，点击生成照片按钮，AI生成证件照片。尽量选择正面、光线明亮的照片。建议同一张图片多次生成。</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+        <h3 class="text-xl font-semibold text-gray-700 mb-6">请上传图片</h3>
+
+        <div class="upload-area border-2 border-dashed border-gray-300 rounded-lg p-12 text-center cursor-pointer hover:border-blue-500">
+          <div class="flex flex-col items-center">
+            <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-4"></i>
+            <p class="text-gray-500 mb-2">点击或拖拽图片上传</p>
+            <p class="text-gray-400 text-sm">支持上传 jpeg、png。</p>
+          </div>
+          <input type="file" class="hidden" accept="image/jpeg, image/png" id="photo-upload">
+        </div>
+
+        <div class="flex items-center justify-between mt-6">
+          <div class="text-gray-600">
+            文件数量：<span id="file-count">0/1</span>
+          </div>
+          <button id="generate-btn" class="btn-generate bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+            <i class="fas fa-magic mr-2"></i>
+            生成照片
+          </button>
+        </div>
+      </div>
+
+      <div id="result-container" class="result-container bg-white rounded-xl shadow-md p-8 mb-10">
+        <h3 class="text-xl font-semibold text-gray-700 mb-6">生成结果</h3>
+
+        <!-- 新增：对比功能 -->
+        <div class="mb-8">
+          <div class="flex border-b border-gray-200">
+            <button class="comparison-tab active py-2 px-4 rounded-t-md rounded-r-md focus:outline-none font-medium" data-tab="side-by-side">
+              <i class="fas fa-columns mr-2"></i>并排对比
+            </button>
+          </div>
+
+          <!-- 并排对比视图 -->
+          <div id="side-by-side-view" class="comparison-view mt-6">
+            <div class="flex flex-col md:flex-row gap-6">
+              <div class="flex-1 text-center">
+                <div class="relative bg-gray-100 rounded-lg overflow-hidden">
+                  <img id="side-original" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt="原图" class="w-full object-cover rounded-lg h-80">
+                  <div class="absolute top-0 left-0 w-full py-2 bg-black/50 text-white">原始照片</div>
+                </div>
+              </div>
+              <div class="flex-1 text-center">
+                <div class="relative bg-gray-100 rounded-lg overflow-hidden">
+                  <img id="side-result" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt="结果图" class="w-full object-cover rounded-lg h-80">
+                  <div class="absolute top-0 left-0 w-full py-2 bg-blue-600/80 text-white">AI处理后</div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6 mt-6">
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <h4 class="font-medium text-blue-700 mb-2">AI优化项目</h4>
+                <ul class="text-gray-700 text-sm space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>背景颜色统一调整为证件照标准蓝</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>面部光线调整，消除阴影</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                    <span>图像裁剪符合证件照标准</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-medium text-gray-700 mb-2">照片参数</h4>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                  <div class="text-gray-600">尺寸:</div>
+                  <div class="font-medium">1寸 (25×35mm)</div>
+                  <div class="text-gray-600">分辨率:</div>
+                  <div class="font-medium">300DPI</div>
+                  <div class="text-gray-600">背景色:</div>
+                  <div class="font-medium">蓝色 (#3B82F6)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 border-t border-gray-200 pt-8">
+          <h4 class="text-lg font-semibold text-gray-700 mb-4">预览不同选项</h4>
+
+          <div class="mb-6">
+            <p class="text-gray-600 mb-3">背景颜色：</p>
+            <div class="flex space-x-4">
+              <div class="bg-option bg-blue-500 active" data-color="blue"></div>
+              <div class="bg-option bg-red-500" data-color="red"></div>
+              <div class="bg-option bg-white border border-gray-300" data-color="white"></div>
+              <div class="bg-option bg-gray-800" data-color="black"></div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <p class="text-gray-600 mb-3">照片尺寸：</p>
+            <div class="flex space-x-4">
+              <div class="preview-option border rounded-lg p-3 active" data-size="small">
+                <span class="block text-sm font-medium">1寸</span>
+                <span class="block text-xs text-gray-500">25×35mm</span>
+              </div>
+              <div class="preview-option border rounded-lg p-3" data-size="medium">
+                <span class="block text-sm font-medium">2寸</span>
+                <span class="block text-xs text-gray-500">35×49mm</span>
+              </div>
+              <div class="preview-option border rounded-lg p-3" data-size="large">
+                <span class="block text-sm font-medium">大2寸</span>
+                <span class="block text-xs text-gray-500">35×53mm</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-4 mt-6">
+            <div class="preview-image bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+              <div class="h-40 bg-blue-500 flex items-center justify-center">
+                <img class="h-36 w-28 object-cover" src="" alt="预览图" id="preview-1">
+              </div>
+              <div class="p-2 text-center">
+                <span class="text-xs text-gray-600">蓝底1寸</span>
+              </div>
+            </div>
+            <div class="preview-image bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+              <div class="h-40 bg-red-500 flex items-center justify-center">
+                <img class="h-36 w-28 object-cover" src="" alt="预览图" id="preview-2">
+              </div>
+              <div class="p-2 text-center">
+                <span class="text-xs text-gray-600">红底1寸</span>
+              </div>
+            </div>
+            <div class="preview-image bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+              <div class="h-40 bg-white flex items-center justify-center">
+                <img class="h-36 w-28 object-cover" src="" alt="预览图" id="preview-3">
+              </div>
+              <div class="p-2 text-center">
+                <span class="text-xs text-gray-600">白底1寸</span>
+              </div>
+            </div>
+            <div class="preview-image bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+              <div class="h-40 bg-gray-800 flex items-center justify-center">
+                <img class="h-36 w-28 object-cover" src="" alt="预览图" id="preview-4">
+              </div>
+              <div class="p-2 text-center">
+                <span class="text-xs text-gray-600">黑底1寸</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center mt-8 space-x-4">
+          <button class="px-6 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 shadow-sm transition-colors">
+            <i class="fas fa-download mr-2"></i>下载
+          </button>
+          <button class="px-6 py-2 bg-blue-100 border border-blue-300 rounded-lg text-blue-700 hover:bg-blue-200 shadow-sm transition-colors">
+            <i class="fas fa-redo mr-2"></i>重新生成
+          </button>
+        </div>
+      </div>
+
+      <!-- 历史记录区域 -->
+      <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-semibold text-gray-700">历史记录</h3>
+          <button class="text-gray-500 hover:text-gray-700 transition-colors">
+            <i class="fas fa-trash-alt mr-1"></i>清空历史
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- 历史记录项 -->
+          <div class="history-item bg-gray-50 rounded-lg overflow-hidden shadow-sm border border-gray-200">
+            <div class="relative">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" class="w-full h-48 object-cover" alt="历史证件照">
+              <div class="absolute top-0 right-0 m-2">
+                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">蓝底</span>
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                <p class="text-white text-sm">2023/11/10 14:30</p>
+              </div>
+            </div>
+            <div class="p-4 flex justify-between items-center">
+              <span class="text-sm text-gray-600">1寸 (25×35mm)</span>
+              <div class="flex space-x-2">
+                <button class="text-gray-500 hover:text-blue-600 transition-colors">
+                  <i class="fas fa-download"></i>
+                </button>
+                <button class="text-gray-500 hover:text-red-600 transition-colors">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-item bg-gray-50 rounded-lg overflow-hidden shadow-sm border border-gray-200">
+            <div class="relative">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" class="w-full h-48 object-cover" alt="历史证件照">
+              <div class="absolute top-0 right-0 m-2">
+                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">红底</span>
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                <p class="text-white text-sm">2023/11/08 09:15</p>
+              </div>
+            </div>
+            <div class="p-4 flex justify-between items-center">
+              <span class="text-sm text-gray-600">2寸 (35×49mm)</span>
+              <div class="flex space-x-2">
+                <button class="text-gray-500 hover:text-blue-600 transition-colors">
+                  <i class="fas fa-download"></i>
+                </button>
+                <button class="text-gray-500 hover:text-red-600 transition-colors">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-item bg-gray-50 rounded-lg overflow-hidden shadow-sm border border-gray-200">
+            <div class="relative">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" class="w-full h-48 object-cover" alt="历史证件照">
+              <div class="absolute top-0 right-0 m-2">
+                <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">白底</span>
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                <p class="text-white text-sm">2023/11/05 16:42</p>
+              </div>
+            </div>
+            <div class="p-4 flex justify-between items-center">
+              <span class="text-sm text-gray-600">大2寸 (35×53mm)</span>
+              <div class="flex space-x-2">
+                <button class="text-gray-500 hover:text-blue-600 transition-colors">
+                  <i class="fas fa-download"></i>
+                </button>
+                <button class="text-gray-500 hover:text-red-600 transition-colors">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 text-center">
+          <button class="text-blue-600 hover:text-blue-800 font-medium transition-colors">
+            查看更多历史记录 <i class="fas fa-chevron-down ml-1"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 rounded-xl p-8 border border-blue-100">
+        <h3 class="text-xl font-semibold text-gray-700 mb-4">为什么选择我们的AI证件照生成器？</h3>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-6">
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="text-blue-600 text-3xl mb-4">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h4 class="font-semibold text-lg mb-2">快速生成</h4>
+            <p class="text-gray-600">只需几秒钟，即可得到符合标准的证件照</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="text-blue-600 text-3xl mb-4">
+              <i class="fas fa-magic"></i>
+            </div>
+            <h4 class="font-semibold text-lg mb-2">AI智能修饰</h4>
+            <p class="text-gray-600">自动调整光线、背景和面部特征</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="text-blue-600 text-3xl mb-4">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h4 class="font-semibold text-lg mb-2">隐私保护</h4>
+            <p class="text-gray-600">所有照片仅用于处理，不会保存或分享</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white py-10 mt-16">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <h2 class="text-xl font-bold flex items-center">
+            <i class="fas fa-id-card mr-2"></i>
+            AI证件照生成器
+          </h2>
+          <p class="text-gray-400 mt-2">智能、快速、便捷的证件照解决方案</p>
+        </div>
+
+        <div class="flex space-x-4">
+          <a href="#" class="h-10 w-10 flex items-center justify-center rounded-full bg-gray-700 hover:bg-blue-600 transition-colors">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="h-10 w-10 flex items-center justify-center rounded-full bg-gray-700 hover:bg-blue-600 transition-colors">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="h-10 w-10 flex items-center justify-center rounded-full bg-gray-700 hover:bg-blue-600 transition-colors">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2023 AI证件照生成器. 保留所有权利.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const uploadArea = document.querySelector('.upload-area');
+      const fileInput = document.getElementById('photo-upload');
+      const fileCount = document.getElementById('file-count');
+      const generateBtn = document.getElementById('generate-btn');
+      const resultContainer = document.getElementById('result-container');
+      const previewImages = [
+        document.getElementById('preview-1'),
+        document.getElementById('preview-2'),
+        document.getElementById('preview-3'),
+        document.getElementById('preview-4')
+      ];
+      const bgOptions = document.querySelectorAll('.bg-option');
+      const previewOptions = document.querySelectorAll('.preview-option');
+      const comparisonTabs = document.querySelectorAll('.comparison-tab');
+      const comparisonViews = document.querySelectorAll('.comparison-view');
+
+      // 默认隐藏结果区域
+      resultContainer.style.display = 'none';
+
+      // 默认禁用生成按钮
+      generateBtn.disabled = true;
+
+      // 点击上传区域触发文件选择
+      uploadArea.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      // 处理文件选择
+      fileInput.addEventListener('change', (event) => {
+        if (event.target.files.length > 0) {
+          // 更新文件计数
+          fileCount.textContent = '1/1';
+
+          // 显示选择的图片预览
+          const file = event.target.files[0];
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+            // 启用生成按钮
+            generateBtn.disabled = false;
+
+            // 添加上传完成效果
+            uploadArea.classList.add('border-green-500');
+            setTimeout(() => {
+              uploadArea.classList.remove('border-green-500');
+            }, 1500);
+          };
+
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // 拖拽上传功能
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('border-blue-500');
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('border-blue-500');
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('border-blue-500');
+
+        if (e.dataTransfer.files.length > 0) {
+          fileInput.files = e.dataTransfer.files;
+          const event = new Event('change');
+          fileInput.dispatchEvent(event);
+        }
+      });
+
+      // 生成按钮点击事件
+      generateBtn.addEventListener('click', () => {
+        // 模拟生成过程
+        generateBtn.disabled = true;
+        generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 正在生成...';
+
+        // 延迟3秒模拟处理时间
+        setTimeout(() => {
+          // 显示结果区域
+          resultContainer.style.display = 'block';
+
+          // 使用上传的图片作为原图和结果图（在实际应用中，这里会替换为AI处理后的图片）
+          const originalImgSrc = URL.createObjectURL(fileInput.files[0]);
+          document.getElementById('side-original').src = originalImgSrc;
+          document.getElementById('side-result').src = originalImgSrc;
+
+          // 更新预览图
+          previewImages.forEach(img => {
+            img.src = originalImgSrc;
+          });
+
+          // 显示结果容器
+          resultContainer.classList.add('show');
+
+          // 恢复按钮状态
+          generateBtn.disabled = false;
+          generateBtn.innerHTML = '<i class="fas fa-magic mr-2"></i> 生成照片';
+
+          // 滚动到结果区域
+          resultContainer.scrollIntoView({ behavior: 'smooth' });
+
+          // 确保只显示并排对比视图
+          document.getElementById('side-by-side-view').classList.remove('hidden');
+          document.getElementById('side-original').src = originalImgSrc;
+          document.getElementById('side-result').src = originalImgSrc;
+        }, 3000);
+      });
+
+      // 背景颜色选项切换
+      bgOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          // 移除所有选项的激活状态
+          bgOptions.forEach(opt => opt.classList.remove('active'));
+
+          // 添加当前选项的激活状态
+          option.classList.add('active');
+
+          // 在实际应用中，这里会更新预览图的背景颜色
+          // 模拟功能，显示切换效果
+          const color = option.getAttribute('data-color');
+          console.log(`Background color changed to: ${color}`);
+        });
+      });
+
+      // 尺寸选项切换
+      previewOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          // 移除所有选项的激活状态
+          previewOptions.forEach(opt => opt.classList.remove('active'));
+
+          // 添加当前选项的激活状态
+          option.classList.add('active');
+
+          // 在实际应用中，这里会更新预览图的尺寸
+          // 模拟功能，显示切换效果
+          const size = option.getAttribute('data-size');
+          console.log(`Size changed to: ${size}`);
+        });
+      });
+
+      // 对比标签页切换
+      comparisonTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // 移除所有标签的激活状态
+          comparisonTabs.forEach(t => t.classList.remove('active'));
+
+          // 添加当前标签的激活状态
+          tab.classList.add('active');
+
+          // 隐藏所有视图
+          comparisonViews.forEach(view => view.classList.add('hidden'));
+
+          // 显示选中的视图
+          const viewId = tab.getAttribute('data-tab') + '-view';
+          document.getElementById(viewId).classList.remove('hidden');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
